@@ -1,0 +1,21 @@
+<div class="d-flex align-items-center m-4 pagination">
+    <div class="left p-2">
+        <select class="form-control" (change)="onChangeDisplayItemPerPage($event)" [(ngModel)]="itemsPerPage">
+            <option *ngFor="let displayItem of displayItemsArray" [value]="displayItem">
+                <strong>{{ displayItem }}</strong>
+            </option>
+        </select>
+    </div>
+    <div class="right p-2">
+        <select class="form-control" (change)="onPageChange()" [(ngModel)]="page">
+            <option *ngFor="let page of pageArray" [ngValue]="page.value">
+                <strong>{{ page.label + '/' + totalItems }}</strong>
+            </option>
+        </select>
+    </div>
+
+    <button class="btn btn-sm" [ngClass]="{'disable': page === 1}" [disabled]="page === 1"
+        (click)="previousPage()" [innerHTML]="previousText"></button>
+    <button class="btn btn-sm" [ngClass]="{'disable': page === totalPages}" [disabled]="page === totalPages"
+        (click)="nextPage()"[innerHTML]="nextText"></button>
+</div>
