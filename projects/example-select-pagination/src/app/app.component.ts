@@ -7,4 +7,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ngx-select-pagination';
+  currentPage = 2;
 }
