@@ -1,12 +1,21 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, forwardRef } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'ngx-select-pagination',
   templateUrl: './select-pagination.component.html',
-  styles: []
-})
-export class SelectPaginationComponent implements OnInit {
+  styles: [],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => SelectPaginationComponent),
+      multi: true
 
+    }
+  ]
+})
+export class SelectPaginationComponent implements OnInit, ControlValueAccessor {
 
   /**
    * Page changed emmiter, fired when page selection changes
@@ -41,6 +50,7 @@ export class SelectPaginationComponent implements OnInit {
   set itemsPerPage(v: number) {
     this._itemsPerPage = v;
     this.totalPages = this.calculateTotalPages();
+    this.generatePageArray();
   }
 
   get itemsPerPage(): number {
@@ -54,6 +64,7 @@ export class SelectPaginationComponent implements OnInit {
   set totalItems(v: number) {
     this._items = v;
     this.totalPages = this.calculateTotalPages();
+    this.generatePageArray();
   }
 
   get totalItems(): number {
@@ -61,7 +72,7 @@ export class SelectPaginationComponent implements OnInit {
   }
 
   /**
-   * Total calculated pages
+   * Total calculated totalPages
    */
   set totalPages(v: number) {
     this._totalPages = v;
@@ -75,7 +86,9 @@ export class SelectPaginationComponent implements OnInit {
    * Current page
    */
   set page(value: number) {
-    this.pageNumber = value > this.totalPages ? this.totalPages : value;
+    // TODO Have to investigate why totalPages value not updated
+    // this.pageNumber = value > this.totalPages ? this.totalPages : value;
+    this.pageNumber = value;
   }
 
   get page(): number {
@@ -98,7 +111,7 @@ export class SelectPaginationComponent implements OnInit {
   private _items: number;
 
   /**
-   * Total pages
+   * Total totalPages
    */
   private _totalPages: number;
 
@@ -108,15 +121,46 @@ export class SelectPaginationComponent implements OnInit {
   private pageNumber = 1;
 
   /**
+   * Control value accessor on change and touched
+   */
+  onChange = Function.prototype;
+  onTouched;
+
+  /**
    * Constructor
    */
-  constructor() { }
+  constructor(
+  ) { }
 
   /**
    * @ignore
    */
   ngOnInit() {
-    this.generatePageArray();
+    this.totalPages = this.calculateTotalPages();
+  }
+
+  /***
+   * Write value for control value accessor
+   */
+  writeValue(value: number): void {
+    this.page = value;
+    this.onChange(this.page);
+  }
+
+  /**
+   * Listend control value accessor on change
+   * @param fn
+   */
+  registerOnChange(fn: () => {}): void {
+    this.onChange = fn;
+  }
+
+  /**
+   * Listend control value accessor on touch
+   * @param fn
+   */
+  registerOnTouched(fn: () => {}): void {
+    this.onTouched = fn;
   }
 
   /**
@@ -134,6 +178,7 @@ export class SelectPaginationComponent implements OnInit {
    * On change page
    */
   onPageChange() {
+    this.writeValue(this.page);
     this.pageChanged.emit({
       page: this.page,
       itemsPerPage: this.itemsPerPage
