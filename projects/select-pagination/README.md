@@ -27,7 +27,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 
-import { SelectPaginationModule } from 'select-pagination';
+import { SelectPaginationModule } from 'ngx-select-pagination';
 
 @NgModule({
   declarations: [
