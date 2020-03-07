@@ -5,7 +5,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   // tslint:disable-next-line:component-selector
   selector: 'ngx-select-pagination',
   templateUrl: './select-pagination.component.html',
-  styles: [],
+  styleUrls: ['./select-pagination.component.css'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -24,9 +24,9 @@ export class SelectPaginationComponent implements OnInit, ControlValueAccessor {
   pageChanged: EventEmitter<any> = new EventEmitter<any>();
 
   /**
-   * Page label separator
+   * Page range separator
    */
-  @Input() labelSeparator = '-';
+  @Input() rangeSeparator = '-';
 
   /**
    * Previous button text
@@ -124,7 +124,7 @@ export class SelectPaginationComponent implements OnInit, ControlValueAccessor {
    * Control value accessor on change and touched
    */
   onChange = Function.prototype;
-  onTouched;
+  onTouched = Function.prototype;
 
   /**
    * Constructor
@@ -136,6 +136,10 @@ export class SelectPaginationComponent implements OnInit, ControlValueAccessor {
    * @ignore
    */
   ngOnInit() {
+    this.itemsPerPage =
+    typeof this.itemsPerPage !== 'undefined'
+      ? this.itemsPerPage
+      : this.displayItemsArray[0];
     this.totalPages = this.calculateTotalPages();
   }
 
@@ -233,43 +237,43 @@ export class SelectPaginationComponent implements OnInit, ControlValueAccessor {
       this.pageArray.push(option);
       page++;
     }
-    this.createLabel();
+    this.createRange();
   }
 
   /**
-   * Create custom label for page array
+   * Create custom range for page array
    */
-  private createLabel() {
+  private createRange() {
     this.pageArray.forEach((option, index) => {
-      option.labelPrefix = this.getLabelPrefix(index);
-      option.labelPostfix = this.getLabelPostfix(index);
-      option.label  = `${option.labelPrefix}${this.labelSeparator}${option.labelPostfix}`;
+      option.startRange = this.getStartRange(index);
+      option.endRange = this.getEndRange(index);
+      option.range  = `${option.startRange}${this.rangeSeparator}${option.endRange}`;
     });
   }
 
   /**
-   * Get label prefix value
+   * Get start range value
    * @param index
    */
-  private getLabelPrefix(index: number) {
-    return index === 0 ? this.pageArray[index].value : this.pageArray[index - 1].labelPostfix + 1;
+  private getStartRange(index: number) {
+    return index === 0 ? this.pageArray[index].value : this.pageArray[index - 1].endRange + 1;
   }
 
   /**
-   * Get label postfix value
+   * Get end range value
    * @param index
    */
-  private getLabelPostfix(index: number) {
-    let postfix: number;
+  private getEndRange(index: number) {
+    let end: number;
     if (index === 0) {
-      postfix = this.pageArray[index].value + this.itemsPerPage - 1;
-      return postfix;
+      end = this.pageArray[index].value + this.itemsPerPage - 1;
+      return end;
     }
-    postfix = this.pageArray[index - 1].labelPostfix + this.itemsPerPage;
-    if (postfix >= this.totalItems) {
-      postfix = this.totalItems;
+    end = this.pageArray[index - 1].endRange + this.itemsPerPage;
+    if (end >= this.totalItems) {
+      end = this.totalItems;
     }
-    return postfix;
+    return end;
   }
 
 }
