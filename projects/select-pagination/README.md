@@ -1,24 +1,58 @@
-# SelectPagination
+# NgxSelectPagination
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.2.14.
+`ngx-select-pagination` is not a typical pagination component, it's a dropdown select pagination component for Angular. This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.21.
 
-## Code scaffolding
+## Features
+* Select display items per page
+* Dropdown pager list with start and end range of items per page
+* Can be used as an angular form control
+* Customize functionality
 
-Run `ng generate component component-name --project select-pagination` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project select-pagination`.
-> Note: Don't forget to add `--project select-pagination` or else it will be added to the default project in your `angular.json` file. 
+## Demo
+Simple example using `ngx-select-pagination`: https://stackblitz.com/github/itorongo/ngx-select-pagination
 
-## Build
+## Installation
 
-Run `ng build select-pagination` to build the project. The build artifacts will be stored in the `dist/` directory.
+* `npm install ngx-select-pagination --save`
 
-## Publishing
+## Usage
 
-After building your library with `ng build select-pagination`, go to the dist folder `cd dist/select-pagination` and run `npm publish`.
+* import `SelectPaginationModule` into your app.module.ts
 
-## Running unit tests
+* add `SelectPaginationModule` to the imports of your NgModule
 
-Run `ng test select-pagination` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```ts
+// app.module.ts
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { AppComponent } from './app.component';
 
-## Further help
+import { SelectPaginationModule } from 'select-pagination';
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    SelectPaginationModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+```
+
+And you are good to go...
+
+Use it in your template like this
+
+````
+<ngx-select-pagination
+    [totalItems]="100" 
+    [itemsPerPage]="10" 
+    [(ngModel)]="currentPage">
+</ngx-select-pagination>
+
+````
