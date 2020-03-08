@@ -8,6 +8,16 @@
     "url": "https://github.com/iTorongo/ngx-select-pagination.git"
   },
   "contributors": [],
+  "keywords": [
+      "angular",
+      "angular2",
+      "angular2+",
+      "pagination",
+      "dropdown",
+      "select",
+      "ngx",
+      "ng"
+  ],
   "peerDependencies": {
     "@angular/common": "^8.2.14",
     "@angular/core": "^8.2.14"
