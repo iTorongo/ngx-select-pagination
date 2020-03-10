@@ -1,6 +1,6 @@
 {
   "name": "ngx-select-pagination",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": "Arnaf Aziz Torongo",
   "license": "MIT",
   "repository": {
@@ -9,14 +9,14 @@
   },
   "contributors": [],
   "keywords": [
-      "angular",
-      "angular2",
-      "angular2+",
-      "pagination",
-      "dropdown",
-      "select",
-      "ngx",
-      "ng"
+    "angular",
+    "angular2",
+    "angular2+",
+    "pagination",
+    "dropdown",
+    "select",
+    "ngx",
+    "ng"
   ],
   "peerDependencies": {
     "@angular/common": "^8.2.14",
