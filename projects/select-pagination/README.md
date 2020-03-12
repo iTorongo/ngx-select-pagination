@@ -9,7 +9,7 @@
 * Customize functionality
 
 ## Demo
-Simple example using `ngx-select-pagination`: https://stackblitz.com/github/itorongo/ngx-select-pagination
+Simple example using `ngx-select-pagination`: https://stackblitz.com/edit/ngx-select-pagination
 
 ## Installation
 
